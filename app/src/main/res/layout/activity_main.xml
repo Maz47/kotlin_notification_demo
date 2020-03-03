@@ -20,4 +20,16 @@
         android:layout_height="wrap_content"
         android:text="Show Extended Notification"/>
 
+    <Button
+        android:id="@+id/button_intent_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Intent Notification"/>
+
+    <Button
+        android:id="@+id/button_actions_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Actions Notification"/>
+
 </LinearLayout>
