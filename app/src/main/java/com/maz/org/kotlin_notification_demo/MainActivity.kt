@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -26,20 +27,38 @@ class MainActivity : AppCompatActivity() {
     private val _bigTextNotificationID: Int = 2
     private val _intentNotificationID: Int = 3
     private val _actionsNotificationID: Int = 4
+    private val _progressBarNotificationID: Int = 5
 
-    private val _snoozeAction: String? = "ACTION_SNOOZE"
+    private val _snoozeAction: String = "ACTION_SNOOZE"
 
     /**
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         createDefaultNotificationChannel()
         createImportantNotificationChannel()
+        //createNotificationChannelGroup()
+
         initSimpleNotification()
         initBigTextNotification()
+        //initBigImageNotification()
+        //initInboxNotification()
+        //initConversationNotification()
+        //initNotificationWithMediaControls()
+        //initLockScreenPublicNotification()
+        //initLockScreenSecretNotification()
+        //initLockScreenPrivateNotification()
+        initNotificationWithProgressBar()
         initNotificationWithIntent()
+        //initNotificationWithIntentBackStack()
+        //initNotificationWithFullScreenIntent()
         initNotificationWithActions()
+        //initReplyNotification()
+        //initTimeSensitiveNotification()
+        //initGroupNotification()
+        //initCustomNotification()
     }
 
     /**
@@ -78,6 +97,36 @@ class MainActivity : AppCompatActivity() {
         bigTextNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
                 notify(_bigTextNotificationID, builder.build())
+            }
+        }
+    }
+
+    /**
+     */
+    private fun initNotificationWithProgressBar() {
+        var progressBarNotificationButton: Button = findViewById(R.id.button_progress_bar_notification)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+            .setSmallIcon(R.drawable.notification_icon)
+            .setContentTitle(getString(R.string.progress_bar_notification_title))
+            .setContentText(getString(R.string.progress_bar_notification_context_text))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        progressBarNotificationButton.setOnClickListener {
+            with(NotificationManagerCompat.from(this)) {
+                builder.setProgress(100, 0, false)
+                notify(_progressBarNotificationID, builder.build())
+                Thread(Runnable {
+                    var counter: Int = 0
+                    while (counter < 100) {
+                        counter += 20
+                        Thread.sleep(2000)
+                        builder.setProgress(100, counter, false)
+                            .setContentText(getString(R.string.progress_bar_notification_context_text_complete) + " " + counter.toString())
+                        notify(_progressBarNotificationID, builder.build())
+                    }
+                    builder.setContentText(getString(R.string.progress_bar_notification_context_text_complete)).setProgress(0, 0, false)
+                    notify(_progressBarNotificationID, builder.build())
+                }).start()
             }
         }
     }

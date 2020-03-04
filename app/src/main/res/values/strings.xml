@@ -15,7 +15,11 @@
     <string name="action_snooze">SNOOZE</string>
     <string name="button_simple_notification">Show Simple Notification</string>
     <string name="button_big_text_notification">Show Big Text Notification</string>
+    <string name="button_progress_bar_notification">Show Progress Bar Notification</string>
     <string name="button_intent_notification">Show Intent Notification</string>
     <string name="button_actions_notification">Show Actions Notification</string>
     <string name="hello_from_the_notification">Hello from the Notification!</string>
+    <string name="progress_bar_notification_title">My Progress Bar Notification</string>
+    <string name="progress_bar_notification_context_text">Downloading something ...</string>
+    <string name="progress_bar_notification_context_text_complete">Download complete</string>
 </resources>
