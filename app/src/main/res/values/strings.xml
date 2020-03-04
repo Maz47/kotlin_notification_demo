@@ -7,7 +7,7 @@
     <string name="simple_notification_title">My Simple-Notification</string>
     <string name="simple_notification_content_text">This is a Simple-Notification!</string>
     <string name="big_text_notification_title">My Custom Extended-Notification</string>
-    <string name="big_text_notification_content_text">\"This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\"</string>
+    <string name="big_text_notification_content_text">This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!</string>
     <string name="intent_notification_title">My Custom Intent-Notification</string>
     <string name="intent_notification_context_text">This is a Custom Intent-Notification!</string>
     <string name="actions_notification_title">My Custom Intent-Notification</string>
@@ -20,6 +20,6 @@
     <string name="button_actions_notification">Show Actions Notification</string>
     <string name="hello_from_the_notification">Hello from the Notification!</string>
     <string name="progress_bar_notification_title">My Progress Bar Notification</string>
-    <string name="progress_bar_notification_context_text">Downloading something ...</string>
+    <string name="progress_bar_notification_context_text">Downloading ...</string>
     <string name="progress_bar_notification_context_text_complete">Download complete</string>
 </resources>

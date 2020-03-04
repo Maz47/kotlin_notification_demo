@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                         counter += 20
                         Thread.sleep(2000)
                         builder.setProgress(100, counter, false)
-                            .setContentText(getString(R.string.progress_bar_notification_context_text_complete) + " " + counter.toString())
+                            .setContentText(getString(R.string.progress_bar_notification_context_text) + " " + counter.toString() + "%")
                         notify(_progressBarNotificationID, builder.build())
                     }
                     builder.setContentText(getString(R.string.progress_bar_notification_context_text_complete)).setProgress(0, 0, false)
