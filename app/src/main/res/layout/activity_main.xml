@@ -15,10 +15,10 @@
         android:text="Show Simple Notification"/>
 
     <Button
-        android:id="@+id/button_extended_notification"
+        android:id="@+id/button_big_text_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Extended Notification"/>
+        android:text="Show Big Text Notification"/>
 
     <Button
         android:id="@+id/button_intent_notification"

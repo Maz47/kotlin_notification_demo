@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">kotlin_notification_demo</string>
+    <string name="default_channel_name">Default Notifications</string>
+    <string name="default_channel_description">This notification channel controls the behavior of the default notifications!</string>
+    <string name="important_channel_name">Important Notifications</string>
+    <string name="important_channel_description">This notification channel controls the behavior of the important notifications!</string>
+    <string name="simple_notification_title">My Simple-Notification</string>
+    <string name="simple_notification_content_text">This is a Simple-Notification!</string>
+    <string name="big_text_notification_title">My Custom Extended-Notification</string>
+    <string name="big_text_notification_content_text">\"This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\"</string>
 </resources>

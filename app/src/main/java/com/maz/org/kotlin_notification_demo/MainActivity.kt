@@ -15,61 +15,76 @@ import androidx.core.app.NotificationManagerCompat
 
 class MainActivity : AppCompatActivity() {
 
-    private val CHANNEL_ID: String = "com.maz.org"
-    private val SIMPLE_NOTIFICATION_ID: Int = 1
-    private val EXTENDED_NOTIFICATION_ID: Int = 2
-    private val INTENT_NOTIFICATION_ID: Int = 3
-    private val ACTIONS_NOTIFICATION_ID: Int = 4
-    private val ACTION_SNOOZE: String? = "ACTION_SNOOZE"
+    private val _defaultChannelID: String = "DEFAULT_NOTIFICATION_CHANNEL"
+    private val _importantChannelID: String = "IMPORTANT_NOTIFICATION_CHANNEL"
+
+    private val _simpleNotificationID: Int = 1
+    private val _bigTextNotificationID: Int = 2
+    private val _intentNotificationID: Int = 3
+    private val _actionsNotificationID: Int = 4
+
+    private val _snoozeAction: String? = "ACTION_SNOOZE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createNotificationChannel()
+        createDefaultNotificationChannel()
+        createImportantNotificationChannel()
         initSimpleNotification()
-        initExtendedNotification()
+        initBigTextNotification()
         initNotificationWithIntent()
         initNotificationWithActions()
     }
 
+    /**
+     * The simplest notification consists of an icon, a text and a one line content text (description).
+     * The notification can be dismissed by swiping. By clicking on the notification nothing will be
+     * happen.
+     */
     private fun initSimpleNotification() {
         var simpleNotificationButton: Button = findViewById(R.id.button_simple_notification)
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle("My Custom Simple-Notification")
-            .setContentText("This is a Custom Simple-Notification!")
+            .setContentTitle(getString(R.string.simple_notification_title))
+            .setContentText(getString(R.string.simple_notification_content_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         simpleNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
-                notify(SIMPLE_NOTIFICATION_ID, builder.build())
+                notify(_simpleNotificationID, builder.build())
             }
         }
     }
 
-    private fun initExtendedNotification() {
-        var extendedNotificationButton: Button = findViewById(R.id.button_extended_notification)
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+    /**
+     * If the notification should provide multi-line content text, the specific style (BigTextStyle) 
+     * has to be applied.
+     */
+    private fun initBigTextNotification() {
+        var bigTextNotificationButton: Button = findViewById(R.id.button_big_text_notification)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle("My Custom Extended-Notification")
-            .setContentText("This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!")
-            .setStyle(NotificationCompat.BigTextStyle().bigText("This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!"))
+            .setContentTitle(getString(R.string.big_text_notification_title))
+            //.setContentText(getString(R.string.big_text_notification_content_text))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.big_text_notification_content_text)))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        extendedNotificationButton.setOnClickListener {
+        bigTextNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
-                notify(EXTENDED_NOTIFICATION_ID, builder.build())
+                notify(_bigTextNotificationID, builder.build())
             }
         }
     }
 
+    /**
+     */
     private fun initNotificationWithIntent() {
         var intentNotificationButton: Button = findViewById(R.id.button_intent_notification)
         val intent = Intent(this, NotificationDetail::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle("My Custom Intent-Notification")
             .setContentText("This is a Custom Intent-Notification!")
@@ -79,18 +94,21 @@ class MainActivity : AppCompatActivity() {
 
         intentNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
-                notify(INTENT_NOTIFICATION_ID, builder.build())
+                notify(_intentNotificationID, builder.build())
             }
         }
     }
+
+    /**
+     */
     private fun initNotificationWithActions() {
         var actionsNotificationButton: Button = findViewById(R.id.button_actions_notification)
         val snoozeIntent = Intent(this, MyBroadcastReceiver::class.java).apply {
-            action = ACTION_SNOOZE
+            action = _snoozeAction
             putExtra(EXTRA_NOTIFICATION_ID, 0)
         }
         val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(this, 0, snoozeIntent, 0)
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle("My Custom Intent-Notification")
             .setContentText("This is a Custom Intent-Notification!")
@@ -99,18 +117,46 @@ class MainActivity : AppCompatActivity() {
 
         actionsNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
-                notify(ACTIONS_NOTIFICATION_ID, builder.build())
+                notify(_actionsNotificationID, builder.build())
             }
         }
     }
 
-    private fun createNotificationChannel() {
+    /**
+     * Creates a Notification-Channel needed for generating Notification in Android 8.0 (O) and above!
+     * This channel describes the behavior of the notifications published in this channel. The User
+     * can modify the behavior inside the app settings. Every created Channel will be visible and has
+     * his own settings. So you can split notifications into several channels. For example Facebook
+     * has different channels for tags and comments.
+     *
+     * The name and description will be visible in the app settings panel.
+     *
+     * Notifications can be published to a specific channel by referencing the channel over the
+     * CHANNEL_ID!
+     *
+     * Properties like led-color, sound, vibration-pattern, etc. can be defined per channel.
+     * If you want to control the same notification (e.g. comments) for multiple different use cases
+     * (e.g. work account and personal account) inside your app, you can create channel groups.
+     *
+     * ATTENTION: Once a channel has been created, you cannot modify any properties! Only the user
+     *            can configure it by changing the settings. If you want to read the current settings
+     *            you can read the changed by calling getNotificationChannel() or getNotificationChannels().
+     */
+    private fun createDefaultNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "My Custom Channel"
-            val descriptionText = "This is my Custom Channel for Notifications!"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
+            val channel = NotificationChannel(_defaultChannelID, getString(R.string.default_channel_name), importance).apply {
+                description = getString(R.string.default_channel_description)
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun createImportantNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(_importantChannelID, getString(R.string.important_channel_name), importance).apply {
+                description = getString(R.string.important_channel_description)
             }
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
