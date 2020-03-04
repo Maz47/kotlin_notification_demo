@@ -26,11 +26,22 @@ class MainActivity : AppCompatActivity() {
 
     private val _simpleNotificationID: Int = 1
     private val _bigTextNotificationID: Int = 2
-    private val _intentNotificationID: Int = 3
-    private val _actionsNotificationID: Int = 4
-    private val _progressBarNotificationID: Int = 5
-    private val _bigImageNotificationID: Int = 6
-    private val _inboxNotificationID: Int = 7
+    private val _bigImageNotificationID: Int = 3
+    private val _inboxNotificationID: Int = 4
+    private val _conversationNotificationID: Int = 5
+    private val _lockScreenPublicNotificationID: Int = 6
+    private val _lockScreenSecretNotificationID: Int = 7
+    private val _lockScreenPrivateNotificationID: Int = 8
+    private val _progressBarNotificationID: Int = 9
+    private val _intentNotificationID: Int = 10
+    private val _notificationWithIntentBackStackID: Int = 11
+    private val _notificationWithFullScreenIntentID: Int = 12
+    private val _notificationWithActionsID: Int = 13
+    private val _notificationWithMediaControlsID: Int = 14
+    private val _replyNotificationID: Int = 15
+    private val _timeSensitiveNotificationID: Int = 16
+    private val _groupNotificationID: Int = 17
+    private val _customNotificationID: Int = 18
 
     private val _snoozeAction: String = "ACTION_SNOOZE"
 
@@ -49,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         initBigImageNotification()
         initInboxNotification()
         //initConversationNotification()
-        //initNotificationWithMediaControls()
         //initLockScreenPublicNotification()
         //initLockScreenSecretNotification()
         //initLockScreenPrivateNotification()
@@ -58,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         //initNotificationWithIntentBackStack()
         //initNotificationWithFullScreenIntent()
         initNotificationWithActions()
+        //initNotificationWithMediaControls()
         //initReplyNotification()
         //initTimeSensitiveNotification()
         //initGroupNotification()
