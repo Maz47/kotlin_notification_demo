@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     private val _snoozeAction: String? = "ACTION_SNOOZE"
 
+    /**
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
