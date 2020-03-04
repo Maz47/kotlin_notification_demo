@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initNotificationWithProgressBar() {
         var progressBarNotificationButton: Button = findViewById(R.id.button_progress_bar_notification)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.progress_bar_notification_title))
             .setContentText(getString(R.string.progress_bar_notification_context_text))
@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity() {
 
         actionsNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
-                notify(_actionsNotificationID, builder.build())
+                notify(_notificationWithActionsID, builder.build())
             }
         }
     }
