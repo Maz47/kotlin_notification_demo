@@ -8,4 +8,9 @@
     <string name="simple_notification_content_text">This is a Simple-Notification!</string>
     <string name="big_text_notification_title">My Custom Extended-Notification</string>
     <string name="big_text_notification_content_text">\"This is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\nThis is a Custom Extended-Notification with much more text displayed!\"</string>
+    <string name="intent_notification_title">My Custom Intent-Notification</string>
+    <string name="intent_notification_context_text">This is a Custom Intent-Notification!</string>
+    <string name="actions_notification_title">My Custom Intent-Notification</string>
+    <string name="actions_notification_context_text">This is a Custom Intent-Notification!</string>
+    <string name="action_snooze">SNOOZE</string>
 </resources>

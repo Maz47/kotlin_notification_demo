@@ -83,6 +83,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * If the notification should react to a user click and start an activity, a pending intent has
+     * to be provided!
+     *
+     * ATTENTION: You may define the AUTO_CANCEL attribute to true so the notification will be
+     *            removed when the user clicks it!
      */
     private fun initNotificationWithIntent() {
         var intentNotificationButton: Button = findViewById(R.id.button_intent_notification)
@@ -92,8 +97,8 @@ class MainActivity : AppCompatActivity() {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle("My Custom Intent-Notification")
-            .setContentText("This is a Custom Intent-Notification!")
+            .setContentTitle(getString(R.string.intent_notification_title))
+            .setContentText(getString(R.string.intent_notification_context_text))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
@@ -116,10 +121,10 @@ class MainActivity : AppCompatActivity() {
         val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(this, 0, snoozeIntent, 0)
         var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle("My Custom Intent-Notification")
-            .setContentText("This is a Custom Intent-Notification!")
+            .setContentTitle(getString(R.string.actions_notification_title))
+            .setContentText(getString(R.string.actions_notification_context_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .addAction(R.drawable.ic_snooze, "SNOOZE", snoozePendingIntent)
+            .addAction(R.drawable.ic_snooze, getString(R.string.action_snooze), snoozePendingIntent)
 
         actionsNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
