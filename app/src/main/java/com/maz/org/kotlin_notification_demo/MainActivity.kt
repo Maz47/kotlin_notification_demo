@@ -13,6 +13,10 @@ import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
+/**
+ * @author Maz47
+ * created 03.03.2020
+ */
 class MainActivity : AppCompatActivity() {
 
     private val _defaultChannelID: String = "DEFAULT_NOTIFICATION_CHANNEL"
