@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val _actionsNotificationID: Int = 4
     private val _progressBarNotificationID: Int = 5
     private val _bigImageNotificationID: Int = 6
+    private val _inboxNotificationID: Int = 7
 
     private val _snoozeAction: String = "ACTION_SNOOZE"
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         initSimpleNotification()
         initBigTextNotification()
         initBigImageNotification()
-        //initInboxNotification()
+        initInboxNotification()
         //initConversationNotification()
         //initNotificationWithMediaControls()
         //initLockScreenPublicNotification()
@@ -92,7 +93,6 @@ class MainActivity : AppCompatActivity() {
         var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.big_text_notification_title))
-            //.setContentText(getString(R.string.big_text_notification_content_text))
             .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.big_text_notification_content_text)))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
@@ -115,12 +115,35 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle(getString(R.string.big_image_notification_title))
             .setContentText(getString(R.string.big_image_notification_content_text))
             .setLargeIcon(myBitmap)
-            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(myBitmap).bigLargeIcon(null))
+            .setStyle(NotificationCompat.BigPictureStyle()
+                .bigPicture(myBitmap)
+                .bigLargeIcon(null))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         bigImageNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
                 notify(_bigImageNotificationID, builder.build())
+            }
+        }
+    }
+
+    /**
+     */
+    private fun initInboxNotification() {
+        var inboxNotificationButton: Button = findViewById(R.id.button_inbox_notification)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
+            .setSmallIcon(R.drawable.notification_icon)
+            .setContentTitle(getString(R.string.inbox_notification_title))
+            .setContentText(getString(R.string.inbox_notification_content_text))
+            .setStyle(NotificationCompat.InboxStyle()
+                .addLine(getString(R.string.inbox_notification_line_1))
+                .addLine(getString(R.string.inbox_notification_line_2))
+                .addLine(getString(R.string.inbox_notification_line_3)))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        inboxNotificationButton.setOnClickListener {
+            with(NotificationManagerCompat.from(this)) {
+                notify(_inboxNotificationID, builder.build())
             }
         }
     }

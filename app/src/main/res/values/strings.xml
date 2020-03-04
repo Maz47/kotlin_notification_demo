@@ -25,4 +25,10 @@
     <string name="progress_bar_notification_context_text_complete">Download complete</string>
     <string name="big_image_notification_title">My Big-Image-Notification</string>
     <string name="big_image_notification_content_text">This is a Big-Image-Notification!</string>
+    <string name="inbox_notification_title">My Inbox-Notification</string>
+    <string name="inbox_notification_content_text">This is a Inbox-Notification!</string>
+    <string name="inbox_notification_line_1">This is the first line of the Inbox-Notification!</string>
+    <string name="inbox_notification_line_2">This is the second line of the Inbox-Notification!</string>
+    <string name="inbox_notification_line_3">This is the third line of the Inbox-Notification!</string>
+    <string name="button_inbox_notification">Show Inbox Notification</string>
 </resources>
