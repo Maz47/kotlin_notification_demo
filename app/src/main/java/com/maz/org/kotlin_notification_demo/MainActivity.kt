@@ -6,10 +6,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val _intentNotificationID: Int = 3
     private val _actionsNotificationID: Int = 4
     private val _progressBarNotificationID: Int = 5
+    private val _bigImageNotificationID: Int = 6
 
     private val _snoozeAction: String = "ACTION_SNOOZE"
 
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         initSimpleNotification()
         initBigTextNotification()
-        //initBigImageNotification()
+        initBigImageNotification()
         //initInboxNotification()
         //initConversationNotification()
         //initNotificationWithMediaControls()
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initSimpleNotification() {
         var simpleNotificationButton: Button = findViewById(R.id.button_simple_notification)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.simple_notification_title))
             .setContentText(getString(R.string.simple_notification_content_text))
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initBigTextNotification() {
         var bigTextNotificationButton: Button = findViewById(R.id.button_big_text_notification)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.big_text_notification_title))
             //.setContentText(getString(R.string.big_text_notification_content_text))
@@ -102,10 +104,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * If the notification should provide an Image, the specific style (BigTextStyle)
+     * has to be applied.
+     */
+    private fun initBigImageNotification() {
+        var bigImageNotificationButton: Button = findViewById(R.id.button_big_image_notification)
+        val myBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.mipmap.android)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
+            .setSmallIcon(R.drawable.notification_icon)
+            .setContentTitle(getString(R.string.big_image_notification_title))
+            .setContentText(getString(R.string.big_image_notification_content_text))
+            .setLargeIcon(myBitmap)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(myBitmap).bigLargeIcon(null))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        bigImageNotificationButton.setOnClickListener {
+            with(NotificationManagerCompat.from(this)) {
+                notify(_bigImageNotificationID, builder.build())
+            }
+        }
+    }
+
+    /**
      */
     private fun initNotificationWithProgressBar() {
         var progressBarNotificationButton: Button = findViewById(R.id.button_progress_bar_notification)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.progress_bar_notification_title))
             .setContentText(getString(R.string.progress_bar_notification_context_text))
@@ -144,7 +168,7 @@ class MainActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.intent_notification_title))
             .setContentText(getString(R.string.intent_notification_context_text))
@@ -168,7 +192,7 @@ class MainActivity : AppCompatActivity() {
             putExtra(EXTRA_NOTIFICATION_ID, 0)
         }
         val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(this, 0, snoozeIntent, 0)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        var builder = NotificationCompat.Builder(this, _importantChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.actions_notification_title))
             .setContentText(getString(R.string.actions_notification_context_text))
