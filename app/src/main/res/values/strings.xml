@@ -13,4 +13,9 @@
     <string name="actions_notification_title">My Custom Intent-Notification</string>
     <string name="actions_notification_context_text">This is a Custom Intent-Notification!</string>
     <string name="action_snooze">SNOOZE</string>
+    <string name="button_simple_notification">Show Simple Notification</string>
+    <string name="button_big_text_notification">Show Big Text Notification</string>
+    <string name="button_intent_notification">Show Intent Notification</string>
+    <string name="button_actions_notification">Show Actions Notification</string>
+    <string name="hello_from_the_notification">Hello from the Notification!</string>
 </resources>
