@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">kotlin_notification_demo</string>
+
     <string name="default_channel_name">Default Notifications</string>
-    <string name="default_channel_description">This notification channel controls the behavior of the default notifications!</string>
-    <string name="important_channel_name">Important Notifications</string>
-    <string name="important_channel_description">This notification channel controls the behavior of the important notifications!</string>
+    <string name="default_channel_description">This notification channel controls the behavior of the "DEFAULT" notifications!</string>
+    <string name="min_channel_name">Min Priority Notifications</string>
+    <string name="min_channel_description">This notification channel controls the behavior of the "MIN" notifications!</string>
+    <string name="max_channel_name">Max Priority Notifications</string>
+    <string name="max_channel_description">This notification channel controls the behavior of the "MAX" notifications!</string>
+    <string name="low_channel_name">Low Priority Notifications</string>
+    <string name="low_channel_description">This notification channel controls the behavior of the "LOW" notifications!</string>
+    <string name="high_channel_name">High Priority Notifications</string>
+    <string name="high_channel_description">This notification channel controls the behavior of the "HIGH" notifications!</string>
+
     <string name="simple_notification_title">My Simple-Notification</string>
     <string name="simple_notification_content_text">This is a Simple-Notification!</string>
     <string name="big_text_notification_title">My Big-Text-Notification</string>

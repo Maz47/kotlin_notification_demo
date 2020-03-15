@@ -22,7 +22,10 @@ import androidx.core.app.NotificationManagerCompat
 class MainActivity : AppCompatActivity() {
 
     private val _defaultChannelID: String = "DEFAULT_NOTIFICATION_CHANNEL"
-    private val _importantChannelID: String = "IMPORTANT_NOTIFICATION_CHANNEL"
+    private val _minChannelID: String = "MIN_NOTIFICATION_CHANNEL"
+    private val _maxChannelID: String = "MAX_NOTIFICATION_CHANNEL"
+    private val _lowChannelID: String = "LOW_NOTIFICATION_CHANNEL"
+    private val _highChannelID: String = "HIGH_NOTIFICATION_CHANNEL"
 
     private val _simpleNotificationID: Int = 1
     private val _bigTextNotificationID: Int = 2
@@ -52,7 +55,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         createDefaultNotificationChannel()
-        createImportantNotificationChannel()
+        createMinNotificationChannel()
+        createMaxNotificationChannel()
+        createLowNotificationChannel()
+        createHighNotificationChannel()
         //createNotificationChannelGroup()
 
         initSimpleNotification()
@@ -77,12 +83,11 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * The simplest notification consists of an icon, a text and a one line content text (description).
-     * The notification can be dismissed by swiping. By clicking on the notification nothing will be
-     * happen.
+     * The notification can be dismissed by swiping. By clicking on the notification nothing will happen.
      */
     private fun initSimpleNotification() {
         var simpleNotificationButton: Button = findViewById(R.id.button_simple_notification)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        var builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.simple_notification_title))
             .setContentText(getString(R.string.simple_notification_content_text))
@@ -101,7 +106,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initBigTextNotification() {
         var bigTextNotificationButton: Button = findViewById(R.id.button_big_text_notification)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        var builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.big_text_notification_title))
             .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.big_text_notification_content_text)))
@@ -121,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun initBigImageNotification() {
         var bigImageNotificationButton: Button = findViewById(R.id.button_big_image_notification)
         val myBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.mipmap.android)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        var builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.big_image_notification_title))
             .setContentText(getString(R.string.big_image_notification_content_text))
@@ -141,8 +146,8 @@ class MainActivity : AppCompatActivity() {
     /**
      */
     private fun initInboxNotification() {
-        var inboxNotificationButton: Button = findViewById(R.id.button_inbox_notification)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        val inboxNotificationButton: Button = findViewById(R.id.button_inbox_notification)
+        val builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.inbox_notification_title))
             .setContentText(getString(R.string.inbox_notification_content_text))
@@ -162,12 +167,13 @@ class MainActivity : AppCompatActivity() {
     /**
      */
     private fun initNotificationWithProgressBar() {
-        var progressBarNotificationButton: Button = findViewById(R.id.button_progress_bar_notification)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        val progressBarNotificationButton: Button = findViewById(R.id.button_progress_bar_notification)
+        val builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.progress_bar_notification_title))
             .setContentText(getString(R.string.progress_bar_notification_context_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOnlyAlertOnce(true)
 
         progressBarNotificationButton.setOnClickListener {
             with(NotificationManagerCompat.from(this)) {
@@ -179,8 +185,7 @@ class MainActivity : AppCompatActivity() {
                         counter += 20
                         Thread.sleep(2000)
                         builder.setProgress(100, counter, false)
-                            .setContentText(getString(R.string.progress_bar_notification_context_text) + " " + counter.toString() + "%")
-                        //FIXME Smartphone vibrates every time ?!?!?!?!?
+                            .setContentText(getString(R.string.progress_bar_notification_context_text))
                         notify(_progressBarNotificationID, builder.build())
                     }
                     builder.setContentText(getString(R.string.progress_bar_notification_context_text_complete)).setProgress(0, 0, false)
@@ -198,12 +203,12 @@ class MainActivity : AppCompatActivity() {
      *            removed when the user clicks it!
      */
     private fun initNotificationWithIntent() {
-        var intentNotificationButton: Button = findViewById(R.id.button_intent_notification)
+        val intentNotificationButton: Button = findViewById(R.id.button_intent_notification)
         val intent = Intent(this, NotificationDetail::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        val builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.intent_notification_title))
             .setContentText(getString(R.string.intent_notification_context_text))
@@ -227,7 +232,7 @@ class MainActivity : AppCompatActivity() {
             putExtra(EXTRA_NOTIFICATION_ID, 0)
         }
         val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(this, 0, snoozeIntent, 0)
-        var builder = NotificationCompat.Builder(this, _importantChannelID)
+        var builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.actions_notification_title))
             .setContentText(getString(R.string.actions_notification_context_text))
@@ -271,11 +276,41 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-    private fun createImportantNotificationChannel() {
+    private fun createMinNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_MIN
+            val channel = NotificationChannel(_minChannelID, getString(R.string.min_channel_name), importance).apply {
+                description = getString(R.string.min_channel_description)
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun createMaxNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_MAX
+            val channel = NotificationChannel(_maxChannelID, getString(R.string.max_channel_name), importance).apply {
+                description = getString(R.string.max_channel_description)
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun createLowNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val channel = NotificationChannel(_lowChannelID, getString(R.string.low_channel_name), importance).apply {
+                description = getString(R.string.low_channel_description)
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun createHighNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(_importantChannelID, getString(R.string.important_channel_name), importance).apply {
-                description = getString(R.string.important_channel_description)
+            val channel = NotificationChannel(_highChannelID, getString(R.string.high_channel_name), importance).apply {
+                description = getString(R.string.high_channel_description)
             }
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
