@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity() {
      * The notification can be dismissed by swiping. By clicking on the notification nothing will happen.
      */
     private fun initSimpleNotification() {
-        var simpleNotificationButton: Button = findViewById(R.id.button_simple_notification)
-        var builder = NotificationCompat.Builder(this, _defaultChannelID)
+        val simpleNotificationButton: Button = findViewById(R.id.button_simple_notification)
+        val builder = NotificationCompat.Builder(this, _defaultChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.simple_notification_title))
             .setContentText(getString(R.string.simple_notification_content_text))
@@ -105,8 +105,8 @@ class MainActivity : AppCompatActivity() {
      * has to be applied.
      */
     private fun initBigTextNotification() {
-        var bigTextNotificationButton: Button = findViewById(R.id.button_big_text_notification)
-        var builder = NotificationCompat.Builder(this, _highChannelID)
+        val bigTextNotificationButton: Button = findViewById(R.id.button_big_text_notification)
+        val builder = NotificationCompat.Builder(this, _highChannelID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.big_text_notification_title))
             .setStyle(NotificationCompat.BigTextStyle().bigText(getString(R.string.big_text_notification_content_text)))
